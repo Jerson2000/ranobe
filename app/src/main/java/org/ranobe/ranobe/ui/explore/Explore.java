@@ -21,6 +21,8 @@ import org.ranobe.ranobe.sources.SourceManager;
 import org.ranobe.ranobe.ui.explore.adapter.SourceAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class Explore extends Fragment implements SourceAdapter.OnSourceSelected 
             Source src = SourceManager.getSource(id);
             dataSources.add(src.metadata());
         }
+        Collections.sort(dataSources, (ds1, ds2) -> Integer.compare(ds1.sourceId, ds2.sourceId));
         binding.sourceList.setAdapter(new SourceAdapter(dataSources, this));
     }
 

@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 
 public class Neovel implements Source {
     private static final String BASE_URL = "https://neovel.io";
-    private static final int SOURCE_ID = 14;
+    private static final int SOURCE_ID = 12;
 
     @Override
     public DataSource metadata() {

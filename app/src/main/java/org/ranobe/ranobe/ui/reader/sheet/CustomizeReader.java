@@ -18,9 +18,11 @@ import org.ranobe.ranobe.ui.reader.sheet.adapter.ReaderThemeAdapter;
 
 public class CustomizeReader extends BottomSheetDialogFragment implements ReaderThemeAdapter.OnReaderThemeSelected {
     private final OnOptionSelection listener;
+    private boolean isBionicRead;
 
-    public CustomizeReader(OnOptionSelection listener) {
+    public CustomizeReader(OnOptionSelection listener,boolean isBionicRead) {
         this.listener = listener;
+        this.isBionicRead = isBionicRead;
     }
 
     @Nullable
@@ -33,6 +35,9 @@ public class CustomizeReader extends BottomSheetDialogFragment implements Reader
 
         binding.readerThemeList.setLayoutManager(new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false));
         binding.readerThemeList.setAdapter(new ReaderThemeAdapter(this));
+
+        binding.bionicReadingToggle.setChecked(isBionicRead);
+        binding.bionicReadingToggle.setOnCheckedChangeListener((compoundButton, b) -> listener.setBionicRead(b));
         return binding.getRoot();
     }
 
@@ -45,5 +50,7 @@ public class CustomizeReader extends BottomSheetDialogFragment implements Reader
         void setFontSize(float size);
 
         void setReaderTheme(String themeName);
+
+        void setBionicRead(boolean bionicReading);
     }
 }

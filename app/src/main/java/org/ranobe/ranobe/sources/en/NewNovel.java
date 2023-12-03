@@ -20,7 +20,7 @@ import java.util.List;
 
 public class NewNovel implements Source {
     private static final String baseUrl = "https://newnovel.org/";
-    private static final int sourceId = 10;
+    private static final int sourceId = 9;
 
     private String cleanImg(String cover) {
         return cover.replaceAll("/-\\d+x\\d+.\\w{3}/gm", ".jpg");

@@ -18,7 +18,7 @@ import java.util.List;
 
 public class FreeWebNovel implements Source {
     private static final String BASE_URL = "https://freewebnovel.com";
-    private static final int SOURCE_ID = 16;
+    private static final int SOURCE_ID = 14;
 
     @Override
     public DataSource metadata() {

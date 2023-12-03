@@ -3,6 +3,7 @@ package org.ranobe.ranobe.ui.reader;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,6 +40,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
     private Chapter currentChapter;
     private boolean isLoading = false;
     private int currentChapterIndex;
+    public boolean isBionicRead = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +90,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
     }
 
     private void setUpCustomizeReader() {
-        CustomizeReader sheet = new CustomizeReader(this);
+        CustomizeReader sheet = new CustomizeReader(this,isBionicRead);
         sheet.show(getSupportFragmentManager(), "customize-sheet");
     }
 
@@ -129,6 +131,13 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
         adapter.setTheme(theme);
         adapter.notifyItemRangeChanged(0, chapters.size());
         Ranobe.storeReaderTheme(this, themeName);
+    }
+
+    @Override
+    public void setBionicRead(boolean bionicReading) {
+        adapter.setBionicReading(bionicReading);
+        adapter.notifyItemRangeChanged(0, chapters.size());
+        isBionicRead = bionicReading;
     }
 
     @Override

@@ -20,7 +20,7 @@ import java.util.List;
 
 public class WuxiaWorld implements Source {
     private static final String baseUrl = "https://wuxiaworld.site";
-    private static final int sourceId = 13;
+    private static final int sourceId = 11;
 
     private String cleanImg(String cover) {
         return cover.replaceAll("/-\\d+x\\d+.\\w{3}/gm", ".jpg");

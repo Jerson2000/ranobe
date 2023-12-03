@@ -23,7 +23,7 @@ import java.util.Locale;
 
 public class LightNovelWorld implements Source {
     private static final String BASE_URL = "https://lightnovelworld.org";
-    private static final int SOURCE_ID = 15;
+    private static final int SOURCE_ID = 13;
 
     @Override
     public DataSource metadata() {

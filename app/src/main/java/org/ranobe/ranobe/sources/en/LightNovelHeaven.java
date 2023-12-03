@@ -20,7 +20,7 @@ import java.util.List;
 
 public class LightNovelHeaven implements Source {
     private final String baseUrl = "https://lightnovelheaven.com/";
-    private final int sourceId = 9;
+    private final int sourceId = 8;
 
     @Override
     public DataSource metadata() {
