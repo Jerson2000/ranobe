@@ -38,7 +38,6 @@ public class BionicReadingTextView extends AppCompatTextView {
         String[] sentences = originalText.toString().split("\\.\\s+");
 
         int sentenceCount = 0;
-        if(isBionicEnabled){
             for (String sentence : sentences) {
                 String[] words = sentence.split("\\s+");
 
@@ -61,9 +60,7 @@ public class BionicReadingTextView extends AppCompatTextView {
                     spannableStringBuilder.append("\n\n");
                 }
             }
-        }
-
-        setText(spannableStringBuilder);
+        setText(isBionicEnabled?spannableStringBuilder:getText());
     }
 
 
