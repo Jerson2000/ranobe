@@ -38,11 +38,12 @@ public class BionicReadingTextView extends AppCompatTextView {
         String[] sentences = originalText.toString().split("\\.\\s+");
 
         int sentenceCount = 0;
+        if(isBionicEnabled){
             for (String sentence : sentences) {
                 String[] words = sentence.split("\\s+");
 
                 for (String word : words) {
-                    int boldCount = isBionicEnabled ? (int) Math.ceil(word.length() * 0.3) : 0;
+                    int boldCount = isBionicEnabled ? (int) Math.ceil(word.length() * 0.5) : 0;
 
                     for (int i = 0; i < word.length(); i++) {
                         char currentChar = word.charAt(i);
@@ -60,8 +61,9 @@ public class BionicReadingTextView extends AppCompatTextView {
                     spannableStringBuilder.append("\n\n");
                 }
             }
+        }
 
-        setText(isBionicEnabled?spannableStringBuilder:getText());
+        setText(spannableStringBuilder);
     }
 
 
