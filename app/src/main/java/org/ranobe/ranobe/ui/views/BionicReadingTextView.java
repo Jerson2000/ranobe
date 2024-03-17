@@ -4,10 +4,14 @@ package org.ranobe.ranobe.ui.views;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.StyleSpan;
 import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatTextView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class BionicReadingTextView extends AppCompatTextView {
 
@@ -33,34 +37,31 @@ public class BionicReadingTextView extends AppCompatTextView {
     }
 
     public void reloadBionicView() {
-        CharSequence originalText = getText();
-        SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder();
-        String[] sentences = originalText.toString().split("\\.\\s+");
+        Spannable wordToSpan = new SpannableString(getText());
+        int length = wordToSpan.length();
+        Matcher matcher = Pattern.compile("([a-zà-ýA-ZÀ-ÝåäöÅÄÖ].*?)[^a-zà-ýA-ZÀ-ÝåäöÅÄÖ'’]").matcher(getText());
+        while (matcher.find()) {
+            int rangeStart = matcher.start(1);
+            int rangeEnd = matcher.end(1);
+            int rangeLength = rangeEnd - rangeStart;
 
-        int sentenceCount = 0;
-            for (String sentence : sentences) {
-                String[] words = sentence.split("\\s+");
-
-                for (String word : words) {
-                    int boldCount = isBionicEnabled ? (int) Math.ceil(word.length() * 0.3) : 0;
-
-                    for (int i = 0; i < word.length(); i++) {
-                        char currentChar = word.charAt(i);
-                        spannableStringBuilder.append(currentChar);
-                        if (isBionicEnabled && i < boldCount) {
-                            spannableStringBuilder.setSpan(new StyleSpan(Typeface.BOLD), spannableStringBuilder.length() - 1, spannableStringBuilder.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-                        }
-                    }
-
-                    spannableStringBuilder.append(" ");
-                }
-                sentenceCount++;
-
-                if (sentenceCount % 5 == 0) {
-                    spannableStringBuilder.append("\n\n");
-                }
+            int correctLength;
+            if (rangeLength == 1 || rangeLength == 2 || rangeLength == 3) {
+                correctLength = 1;
+            } else if (rangeLength == 4) {
+                correctLength = 2;
+            } else {
+                correctLength = Math.round(rangeLength * 0.4f);
             }
-        setText(isBionicEnabled?spannableStringBuilder:getText());
+
+            wordToSpan.setSpan(
+                    new StyleSpan(Typeface.BOLD),
+                    Math.min(Math.max(rangeStart, 0), length),
+                    Math.min(Math.max(rangeStart + correctLength, 0), length),
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            );
+        }
+        setText(isBionicEnabled?wordToSpan:getText());
     }
 
 
