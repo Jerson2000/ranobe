@@ -47,15 +47,15 @@ public class SourceManager {
         sources.put(5, RanobeHub.class);
         sources.put(6, Ranobe.class);
         sources.put(7, AllNovel.class);
-        /*sources.put(8, AzyNovel.class);*/
-        sources.put(8, LightNovelHeaven.class);
-        sources.put(9, NewNovel.class);
-        /*sources.put(11, ReadWebNovels.class);*/
-        sources.put(10, BoxNovel.class);
-        sources.put(11, WuxiaWorld.class);
-        sources.put(12, Neovel.class);
-        sources.put(13, LightNovelWorld.class);
-        sources.put(14, FreeWebNovel.class);
+        sources.put(8, AzyNovel.class);
+        sources.put(9, LightNovelHeaven.class);
+        sources.put(10, NewNovel.class);
+        sources.put(11, ReadWebNovels.class);
+        sources.put(12, BoxNovel.class);
+        sources.put(13, WuxiaWorld.class);
+        sources.put(14, Neovel.class);
+        sources.put(15, LightNovelWorld.class);
+        sources.put(16, FreeWebNovel.class);
 
         return sources;
     }
