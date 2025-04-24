@@ -13,6 +13,7 @@ import org.ranobe.core.sources.en.NewNovel;
 import org.ranobe.core.sources.en.ReadLightNovel;
 import org.ranobe.core.sources.en.ReadWebNovels;
 import org.ranobe.core.sources.en.VipNovel;
+import org.ranobe.core.sources.en.WordRain69;
 import org.ranobe.core.sources.en.WuxiaWorld;
 import org.ranobe.core.sources.ru.RanobeHub;
 
@@ -32,7 +33,6 @@ public class SourceManager {
             }
             return (Source) klass.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             return new ReadLightNovel();
         }
     }
@@ -45,7 +45,6 @@ public class SourceManager {
             }
             return (Source) klass.newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -66,6 +65,7 @@ public class SourceManager {
         sources.put(13, WuxiaWorld.class);
         sources.put(15, LightNovelWorld.class);
         sources.put(16, FreeWebNovel.class);
+        sources.put(17, WordRain69.class);
 
         return sources;
     }
@@ -86,6 +86,7 @@ public class SourceManager {
         sources.put("wuxiaworld.site", WuxiaWorld.class);
         sources.put("lightnovelworld.org", LightNovelWorld.class);
         sources.put("freewebnovel.com", FreeWebNovel.class);
+        sources.put("wordrain69.com", WordRain69.class);
 
         return sources;
     }

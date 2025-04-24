@@ -1,15 +1,15 @@
-package org.ranobe.ranobe.sources.en;
+package org.ranobe.core.sources.en;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
-import org.ranobe.ranobe.models.Chapter;
-import org.ranobe.ranobe.models.DataSource;
-import org.ranobe.ranobe.models.Filter;
-import org.ranobe.ranobe.models.Lang;
-import org.ranobe.ranobe.models.Novel;
-import org.ranobe.ranobe.network.HttpClient;
-import org.ranobe.ranobe.sources.Source;
-import org.ranobe.ranobe.util.NumberUtils;
+import org.ranobe.core.models.Chapter;
+import org.ranobe.core.models.DataSource;
+import org.ranobe.core.models.Filter;
+import org.ranobe.core.models.Lang;
+import org.ranobe.core.models.Novel;
+import org.ranobe.core.network.HttpClient;
+import org.ranobe.core.sources.Source;
+import org.ranobe.core.util.NumberUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
