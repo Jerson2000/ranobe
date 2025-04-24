@@ -1,47 +1,44 @@
-package com.punpun.nosrej.composeui
+package org.ranobe.ranobe
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.punpun.nosrej.composeui.ui.theme.ComposeUITheme
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.ranobe.ranobe.theme.AppTheme
+import org.ranobe.ranobe.util.EventStates
+import kotlin.getValue
+
 
 class MainActivity : ComponentActivity() {
+    private val viewModel: ViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ComposeUITheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+
+        viewModel.getNovels()
+        getNovel()
+    }
+
+    fun getNovel(){
+        lifecycleScope.launch{
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                viewModel.novels.collect{
+                    when(it){
+                        is EventStates.Success->{
+                            println("ASDASDASD")
+                        }
+                        is EventStates.Error->{
+
+                        }
+                        else -> Unit
+                    }
+
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ComposeUITheme {
-        Greeting("Android")
-    }
-}

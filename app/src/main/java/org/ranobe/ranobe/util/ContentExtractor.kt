@@ -1,4 +1,4 @@
 package org.ranobe.ranobe.util
 
-class ContentExtractor {
-}
+import org.jsoup.nodes.Document
+
