@@ -43,6 +43,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
     private ReadHistory readHistory;
     private boolean isLoading = false;
     private int currentChapterIndex;
+    private LinearLayoutManager layoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
                 }
             }
         });
+        layoutManager = (LinearLayoutManager) binding.pageList.getLayoutManager();
 
         chaptersViewModel.getChapters(currentNovel).observe(this, this::setChapters);
         chaptersViewModel.getError().observe(this, this::setError);
@@ -103,7 +105,6 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
         chapters.add(chapter);
         currentChapter = chapter;
 
-        LinearLayoutManager layoutManager = (LinearLayoutManager) binding.pageList.getLayoutManager();
         if (layoutManager == null) return;
         int scrollPosition = layoutManager.findFirstVisibleItemPosition();
         View firstVisibleView = layoutManager.findViewByPosition(scrollPosition);
@@ -144,16 +145,15 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
 
     @Override
     public void setBionicReading(boolean isBionicReading) {
+        Ranobe.setBionicReader(this,isBionicReading);
         adapter.setBionicReading(isBionicReading);
-        LinearLayoutManager layoutManager = (LinearLayoutManager) binding.pageList.getLayoutManager();
         if (layoutManager == null) return;
 
-        int firstVisible = layoutManager.findFirstVisibleItemPosition();
-        int lastVisible = layoutManager.findLastVisibleItemPosition();
-
-        for (int i = firstVisible; i <= lastVisible; i++) {
-            adapter.notifyItemChanged(i);
-        }
+        int scrollPosition = layoutManager.findFirstVisibleItemPosition();
+        View firstVisibleView = layoutManager.findViewByPosition(scrollPosition);
+        int scrollOffset = (firstVisibleView != null) ? firstVisibleView.getTop() : 0;
+        adapter.notifyItemChanged(scrollPosition);
+        binding.pageList.post(() -> layoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset));
     }
 
     @Override
@@ -170,9 +170,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
 
     @Override
     protected void onDestroy() {
-        LinearLayoutManager layoutManager = (LinearLayoutManager) binding.pageList.getLayoutManager();
         if (layoutManager == null) return;
-
         int position = layoutManager.findFirstVisibleItemPosition();
         View view = layoutManager.findViewByPosition(position);
         int offset = (view != null) ? view.getTop() : 0;
