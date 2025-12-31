@@ -1,6 +1,5 @@
 package org.ranobe.ranobe.ui.chapters.adapter;
 
-import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -9,23 +8,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.ranobe.ranobe.databinding.ItemChapterBinding;
 import org.ranobe.ranobe.models.Chapter;
+import org.ranobe.ranobe.models.ReadHistory;
 
 import java.util.List;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHolder> {
     private final List<Chapter> items;
     private final OnChapterItemClickListener listener;
-    private List<String> readingList;
+    private List<ReadHistory> historyList;
 
     public ChapterAdapter(List<Chapter> items, OnChapterItemClickListener listener) {
         this.items = items;
         this.listener = listener;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
-    public void setReadingList(List<String> readingList) {
-        this.readingList = readingList;
-        this.notifyDataSetChanged();
+    public ChapterAdapter(List<Chapter> items,List<ReadHistory> historyList, OnChapterItemClickListener listener) {
+        this.historyList = historyList;
+        this.listener = listener;
+        this.items = items;
     }
 
     @NonNull
@@ -38,11 +38,16 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Chapter item = items.get(position);
-        if (readingList != null && readingList.contains(item.url)) {
-            holder.binding.chapterItemLayout.setAlpha(0.5F);
-        } else {
-            holder.binding.chapterItemLayout.setAlpha(1);
+        boolean isRead = false;
+        if (historyList != null) {
+            for (ReadHistory history : historyList) {
+                if (history != null && history.url.equals(item.url)) {
+                    isRead = true;
+                    break;
+                }
+            }
         }
+        holder.binding.chapterItemLayout.setAlpha(isRead ? 0.5F : 1.0F);
         holder.binding.chapterName.setText(item.name);
         if (item.updated != null && !item.updated.isEmpty())
             holder.binding.updated.setText(item.updated);

@@ -53,7 +53,7 @@ public class AllNovel implements Source {
         for (Element element : doc.select("div.row")) {
             String url = element.select("h3.truyen-title > a").attr("href").trim();
 
-            if (url.length() > 0) {
+            if (!url.isEmpty()) {
                 Novel item = new Novel(url);
                 item.sourceId = sourceId;
                 item.name = element.select("h3.truyen-title > a").text().trim();
@@ -113,10 +113,6 @@ public class AllNovel implements Source {
     @Override
     public Chapter chapter(Chapter chapter) throws Exception {
         Element doc = Jsoup.parse(HttpClient.GET(baseUrl + chapter.url, new HashMap<>()));
-
-        chapter.url = baseUrl + chapter.url;
-        chapter.content = "";
-
         doc.select("div.chapter-c").select("p").append("::");
         chapter.content = SourceUtils.cleanContent(
                 doc.select("div.chapter-c").text().replaceAll("::", "\n\n").trim()

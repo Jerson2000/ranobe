@@ -25,6 +25,7 @@ public class Ranobe {
     public static final String KEY_SOURCE_ID = "key_source_id";
     public static final String KEY_NOVEL = "key_novel";
     public static final String KEY_CHAPTER = "key_chapter";
+    public static final String KEY_READ_HISTORY = "key_history";
 
     public static final String NOTIF_DOWNLOAD_CHANNEL_NAME = "download_notification";
 
@@ -34,7 +35,7 @@ public class Ranobe {
 
     // database configs
     public static final String DATABASE_NAME = "ranobe_database";
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
 
     public static final String[] SILLY_EMOJI = new String[]{
             "( ╥﹏╥) ノシ",
