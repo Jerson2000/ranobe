@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.ranobe.ranobe.R;
 import org.ranobe.ranobe.config.Ranobe;
+import org.ranobe.ranobe.config.RanobeSettings;
 import org.ranobe.ranobe.databinding.ActivityReaderBinding;
 import org.ranobe.ranobe.models.Chapter;
 import org.ranobe.ranobe.models.Novel;
@@ -60,6 +61,7 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
         readerViewModel = new ViewModelProvider(this).get(ReaderViewModel.class);
         historyViewModel = new ViewModelProvider(this).get(HistoryViewModel.class);
         ChaptersViewModel chaptersViewModel = new ViewModelProvider(this).get(ChaptersViewModel.class);
+        if(readHistory!=null) RanobeSettings.get().setCurrentSource(readHistory.sourceId).save();
 
         adapter = new PageAdapter(chapters);
         binding.pageList.setLayoutManager(new LinearLayoutManager(this));
@@ -170,12 +172,12 @@ public class ReaderActivity extends AppCompatActivity implements CustomizeReader
 
     @Override
     protected void onDestroy() {
-        if (layoutManager == null) return;
-        int position = layoutManager.findFirstVisibleItemPosition();
-        View view = layoutManager.findViewByPosition(position);
-        int offset = (view != null) ? view.getTop() : 0;
-
-        historyViewModel.updateReadHistoryPosition(position, offset, currentChapter.url);
+        if (layoutManager != null && currentChapter != null) {
+            int position = layoutManager.findFirstVisibleItemPosition();
+            View view = layoutManager.findViewByPosition(position);
+            int offset = (view != null) ? view.getTop() : 0;
+            historyViewModel.updateReadHistoryPosition(position, offset, currentChapter.url);
+        }
         super.onDestroy();
 
     }

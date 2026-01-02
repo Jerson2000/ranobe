@@ -75,6 +75,7 @@ public class History extends Fragment implements OnItemClickListener<Map<String,
         Bundle bundle = new Bundle();
         if (isDetail) {
             NavController controller = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment_content_main);
+            bundle.clear();
             bundle.putParcelable(Ranobe.KEY_NOVEL, new Novel(history.novelUrl,history.sourceId));
             controller.navigate(R.id.history_fragment_to_details, bundle);
         }else if (isDelete) {
@@ -84,7 +85,8 @@ public class History extends Fragment implements OnItemClickListener<Map<String,
                     .setNegativeButton("Cancel", (dialog, i) -> dialog.dismiss())
                     .show();
         } else {
-            bundle.putParcelable(Ranobe.KEY_NOVEL, new Novel(history.novelUrl));
+            bundle.clear();
+            bundle.putParcelable(Ranobe.KEY_NOVEL, new Novel(history.novelUrl,history.sourceId));
             bundle.putParcelable(Ranobe.KEY_CHAPTER, ChapterMapper.ToChapter(history));
             bundle.putParcelable(Ranobe.KEY_READ_HISTORY, history);
             requireActivity().startActivity(new Intent(requireActivity(), ReaderActivity.class).putExtras(bundle).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP));

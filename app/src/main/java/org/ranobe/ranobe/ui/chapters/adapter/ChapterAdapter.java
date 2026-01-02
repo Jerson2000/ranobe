@@ -10,7 +10,9 @@ import org.ranobe.ranobe.databinding.ItemChapterBinding;
 import org.ranobe.ranobe.models.Chapter;
 import org.ranobe.ranobe.models.ReadHistory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHolder> {
     private final List<Chapter> items;
@@ -28,6 +30,18 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
         this.items = items;
     }
 
+    private Map<String,ReadHistory> getHistoryMap(){
+        Map<String, ReadHistory> historyMap = new HashMap<>();
+        if (historyList != null && !historyList.isEmpty()) {
+            for (ReadHistory history : historyList) {
+                if (history != null) {
+                    historyMap.put(history.url, history);
+                }
+            }
+        }
+        return historyMap;
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -38,15 +52,8 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Chapter item = items.get(position);
-        boolean isRead = false;
-        if (historyList != null) {
-            for (ReadHistory history : historyList) {
-                if (history != null && history.url.equals(item.url)) {
-                    isRead = true;
-                    break;
-                }
-            }
-        }
+        ReadHistory history = getHistoryMap().get(item.url);
+        boolean isRead = (history != null);
         holder.binding.chapterItemLayout.setAlpha(isRead ? 0.5F : 1.0F);
         holder.binding.chapterName.setText(item.name);
         if (item.updated != null && !item.updated.isEmpty())
